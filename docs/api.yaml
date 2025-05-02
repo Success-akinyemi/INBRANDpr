@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://apache.org/'
-host: api.inbrandpr.com
+host: inbrandpr-api.onrender.com/api
 basePath: 
 schemes:
   - https

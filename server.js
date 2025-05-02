@@ -17,6 +17,7 @@ import './connection/db.js';
 const allowedOrigins = [
     process.env.CLIENT_URL,
     process.env.ADMIN_URL,
+    process.env.SERVER_URL,
 ];
 
 const corsOptions = {
