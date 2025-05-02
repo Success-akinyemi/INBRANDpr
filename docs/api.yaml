@@ -1,0 +1,1937 @@
+swagger: '2.0'
+info:
+  title: INBRANDpr Server Documentation
+  description: API documentation for INBRANDpr.
+  version: 1.0
+  contact:
+    email: successakinyemi365@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://apache.org/'
+host: api.inbrandpr.com
+basePath: 
+schemes:
+  - https
+
+securityDefinitions:
+  Inbrandprauthid:
+    type: apiKey
+    in: cookie
+    name: inbrandprauthid
+
+
+security:
+  - Inbrandprauthid: []
+
+
+tags:
+  - name: Service
+    description: Endpoint for INBRANDpr services
+  - name: Training Program
+    description: Endpoint for INBRANDpr training programs
+  - name: Project
+    description: Endpoint for INBRANDpr project
+  - name: Faq
+    description: Endpoint for INBRANDpr Frequetly asked question
+  - name: Subscriber
+    description: Endpoint for INBRANDpr Subscribers
+  - name: Client Story
+    description: Endpoint for INBRANDpr Client Stories
+  - name: Team Members
+    description: Endpoint for INBRANDpr Client Stories
+  - name: Contact Us
+    description: Endpoint for INBRANDpr Contact us messages
+  - name: Blog
+    description: Endpoint for INBRANDpr Blog
+  - name: Event
+    description: Endpoint for INBRANDpr Event
+  - name: Community
+    description: Endpoint for INBRANDpr Community
+
+
+paths:
+#SERVICE
+  /service/create:
+    post:
+      tags:
+        - Service
+      summary: Create a new service
+      description: Adds a new service to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: The title of the service
+        - in: formData
+          name: description
+          type: string
+          required: true
+          description: A brief description of the service
+        - in: formData
+          name: ctaLink
+          type: string
+          required: false
+          description: A call-to-action link (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the service
+      responses:
+        201:
+          description: Service created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating service
+
+  /service/update:
+    post:
+      tags:
+        - Service
+      summary: Update new service
+      description: update a new service to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: serviceId
+          type: string
+          required: true
+          description: The service Id of the service
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The title of the service
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: A brief description of the service
+        - in: formData
+          name: ctaLink
+          type: string
+          required: false
+          description: A call-to-action link (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the service
+      responses:
+        201:
+          description: Service updated successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while updating service
+
+  /service/delete:
+    post:
+      tags:
+        - Service
+      summary: Delete a service
+      description: Delete a service
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - serviceId
+            properties:
+              serviceId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /service/getServices:
+    get:
+      tags:
+        - Service
+      summary: Get services
+      description: Get services
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /service/getService/{serviceId}:
+    get:
+      tags:
+        - Service
+      summary: Get a service
+      description: Get a service
+      parameters:
+        - name: serviceId
+          in: path
+          required: true
+          description: The service id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#TRAINING PROGRAMS
+  /trainingProgram/create:
+    post:
+      tags:
+        - Training Program
+      summary: Create a new Training Program
+      description: Create a new Training Program to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: instructor
+          type: string
+          required: true
+          description: The instructor of the training program
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The title of the training program
+        - in: formData
+          name: date
+          type: string
+          required: true
+          description: Date of the program (optional)
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: A brief description of the training program
+        - in: formData
+          name: tag
+          type: array
+          required: true
+          description: A tags of training an array of strings
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: A description of training
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the training program
+      responses:
+        201:
+          description: Training created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating training
+
+  /trainingProgram/update:
+    post:
+      tags:
+        - Training Program
+      summary: Update a Training Program
+      description: Update a Training Program to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: trainingId
+          type: string
+          required: true
+          description: The trainingId of the training program
+        - in: formData
+          name: instructor
+          type: string
+          required: false
+          description: The instructor of the training program
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The title of the training program
+        - in: formData
+          name: date
+          type: string
+          required: false
+          description: Date of the program (optional)
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: A brief description of the training program
+        - in: formData
+          name: tag
+          type: array
+          required: false
+          description: A tags of training an array of strings
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: A description of training
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the training program
+      responses:
+        201:
+          description: Training updated successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while updateing training
+
+  /trainingProgram/delete:
+    post:
+      tags:
+        - Training Program
+      summary: Delete a training program
+      description: Delete a training program
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - trainingId
+            properties:
+              trainingId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /trainingProgram/getTrainingPrograms:
+    get:
+      tags:
+        - Training Program
+      summary: Get training progarms
+      description: Get training progarms
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /trainingProgram/getTrainingProgram/{trainingId}:
+    get:
+      tags:
+        - Training Program
+      summary: Get training program
+      description: Delete a training program
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          description: The training id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#PROJECTS
+  /project/create:
+    post:
+      tags:
+        - Project
+      summary: Create a new project
+      description: Adds a new project to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: The title of the project
+        - in: formData
+          name: description
+          type: string
+          required: true
+          description: A brief description of the project
+        - in: formData
+          name: link
+          type: string
+          required: false
+          description: A link to project (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the project
+      responses:
+        201:
+          description: Project created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating project
+
+  /project/update:
+    post:
+      tags:
+        - Project
+      summary: Update a project
+      description: Update a project to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: projectId
+          type: string
+          required: true
+          description: The projectId of the project
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The title of the project
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: A brief description of the project
+        - in: formData
+          name: link
+          type: string
+          required: false
+          description: A link to project (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the project
+      responses:
+        201:
+          description: Project update successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while updating project
+
+  /project/delete:
+    post:
+      tags:
+        - Project
+      summary: Delete a project
+      description: Delete a project
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - projectId
+            properties:
+              projectId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /project/getProjects:
+    get:
+      tags:
+        - Project
+      summary: Get projects
+      description: Get projects
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /project/getProject/{projectId}:
+    get:
+      tags:
+        - Project
+      summary: Get a project
+      description: get a project
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          description: The project id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#FAQ
+  /faq/create:
+    post:
+      tags:
+        - Faq
+      summary: New Faq
+      description: create a new faq
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - question
+              - answer
+            properties:
+              question:
+                type: string
+              answer:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /faq/update:
+    post:
+      tags:
+        - Faq
+      summary: Update Faq
+      description: update a faq
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - faqId
+            properties:
+              faqId:
+                type: string
+              question:
+                type: string
+              answer:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /faq/delete:
+    post:
+      tags:
+        - Faq
+      summary: Delete Faq
+      description: Delete a faq
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - faqId
+            properties:
+              faqId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /faq/getFaqs:
+    get:
+      tags:
+        - Faq
+      summary: Get Faq data
+      description: Get faq
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /faq/getFaq/{faqId}:
+    get:
+      tags:
+        - Faq
+      summary: Get a faq
+      description: get a faq
+      parameters:
+        - name: faqId
+          in: path
+          required: true
+          description: The faq id
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#SUBSCRIBERS
+  /subscriber/subscribe:
+    post:
+      tags:
+        - Subscriber
+      summary: New subscriber
+      description: create a new subscriber
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /subscriber/unSubscribe:
+    post:
+      tags:
+        - Subscriber
+      summary: Remove subscriber from subscribers list
+      description: remove a subscriber from subscribers list
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /subscriber/getSubscribers:
+    get:
+      tags:
+        - Subscriber
+      summary: Get Subscriber data
+      description: Get Subscriber data
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: true
+          description: Search user based on email address
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#CLIENT STORY
+  /clientStory/create:
+    post:
+      tags:
+        - Client Story
+      summary: Create a new client story
+      description: Adds a new client story to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: story
+          type: string
+          required: true
+          description: The story of the cleint
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: A brief name of the client
+        - in: formData
+          name: role
+          type: string
+          required: false
+          description: A role of the client (optional)
+        - in: formData
+          name: ratings
+          type: string
+          required: false
+          description: A ratings of the client (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the client story
+      responses:
+        201:
+          description: Client story created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating Client story
+
+  /clientStory/update:
+    post:
+      tags:
+        - Client Story
+      summary: Update a client story
+      description: Update a new client story to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: storyId
+          type: string
+          required: true
+          description: The storyId of the client
+        - in: formData
+          name: story
+          type: string
+          required: false
+          description: The story of the client
+        - in: formData
+          name: name
+          type: string
+          required: false
+          description: A brief name of the client
+        - in: formData
+          name: role
+          type: string
+          required: false
+          description: A role of the client (optional)
+        - in: formData
+          name: ratings
+          type: string
+          required: false
+          description: A ratings of the client (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the client story
+      responses:
+        201:
+          description: Client story updated successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while updating Client story
+
+  /clientStory/delete:
+    post:
+      tags:
+        - Client Story
+      summary: Delete
+      description: Delete client story
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - storyId
+            properties:
+              storyId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /clientStory/getStories:
+    get:
+      tags:
+        - Client Story
+      summary: Fetch Client Stories
+      description: Fetch all client stories
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /clientStory/getStory/{storyId}:
+    get:
+      tags:
+        - Client Story
+      summary: Fetch Client Story
+      description: Fetch all client story
+      parameters:
+        - name: storyId
+          in: query
+          required: true
+          description: The story id of the story
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#TEAM MEMBERS
+  /teamMembers/create:
+    post:
+      tags:
+        - Team Members
+      summary: Create a new Team members
+      description: Adds a new team members to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: The name of the team member
+        - in: formData
+          name: position
+          type: string
+          required: true
+          description: A brief position of the team member
+        - in: formData
+          name: bio
+          type: string
+          required: false
+          description: A brief bio (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the team member
+      responses:
+        201:
+          description: Team member created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating team member
+
+  /teamMembers/update:
+    post:
+      tags:
+        - Team Members
+      summary: Update a Team members
+      description: Update a team members to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: memberId
+          type: string
+          required: true
+          description: The memberId of the team member
+        - in: formData
+          name: name
+          type: string
+          required: false
+          description: The name of the team member
+        - in: formData
+          name: position
+          type: string
+          required: false
+          description: A brief position of the team member
+        - in: formData
+          name: bio
+          type: string
+          required: false
+          description: A brief bio (optional)
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the team member
+      responses:
+        201:
+          description: Team member created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating team member
+
+  /teamMembers/delete:
+    post:
+      tags:
+        - Team Members
+      summary: Delete
+      description: Delete team members 
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - memberId
+            properties:
+              memberId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /teamMembers/getTeamMembers:
+    get:
+      tags:
+        - Team Members
+      summary: Fetch Team members
+      description: Fetch all team members
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /teamMembers/getTeamMember/{memberId}:
+    get:
+      tags:
+        - Team Members
+      summary: Fetch team member
+      description: Fetch a team member data
+      parameters:
+        - name: memberId
+          in: query
+          required: true
+          description: The member id of the team
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#CONTACT US
+  /contactUs/sendMessage:
+    post:
+      tags:
+        - Contact Us
+      summary: Send message from clients
+      description: Endpoint for clients to send message
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - firstName
+              - lastName
+              - email
+              - message
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              email:
+                type: string
+              message:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /contactUs/replyMessage:
+    post:
+      tags:
+        - Contact Us
+      summary: Reply client message
+      description: Endpoint for Inbrand to reply client message
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - messageId
+              - replyMessage
+            properties:
+              messageId:
+                type: string
+              replyMessage:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /contactUs/delete:
+    post:
+      tags:
+        - Contact Us
+      summary: Delete client message
+      description: Endpoint for Inbrand to delete client message
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - messageId
+            properties:
+              messageId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /contactUs/getMessages:
+    get:
+      tags:
+        - Contact Us
+      summary: Get all messages
+      description: Fetch messages from client
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          description: search user with email
+          schema:
+            type: string
+        - name: replied
+          in: query
+          required: false
+          description: sort message based on replied
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /contactUs/getMessage/{messageId}:
+    get:
+      tags:
+        - Contact Us
+      summary: Get a message
+      description: Fetch a meessage data
+      parameters:
+        - name: messageId
+          in: query
+          required: true
+          description: The message id of the message
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#BLOG
+  /blog/create:
+    post:
+      tags:
+        - Blog
+      summary: Create a new blog
+      description: Adds a new blog to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: The title of the blog
+        - in: formData
+          name: abstract
+          type: string
+          required: true
+          description: A brief abstract of the blog
+        - in: formData
+          name: introduction
+          type: string
+          required: false
+          description: An introduction of the blog (optional)
+        - in: formData
+          name: content
+          type: string
+          required: true
+          description: The content of the blog
+        - in: formData
+          name: conclusion
+          type: string
+          required: false
+          description: The conclusion of the blog
+        - in: formData
+          name: author
+          type: string
+          required: false
+          description: The author of the blog
+        - in: formData
+          name: category
+          type: array
+          required: true
+          description: The category of the blog, array of strings
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the blog
+        - in: formData
+          name: authorImage
+          type: file
+          required: false
+          description: An author image file for the blog
+      responses:
+        201:
+          description: Blog created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating blog
+
+  /blog/create:
+    post:
+      tags:
+        - Blog
+      summary: Update a blog
+      description: Update a blog to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: blogId
+          type: string
+          required: true
+          description: The blogId of the blog
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The title of the blog
+        - in: formData
+          name: abstract
+          type: string
+          required: false
+          description: A brief abstract of the blog
+        - in: formData
+          name: introduction
+          type: string
+          required: false
+          description: An introduction of the blog (optional)
+        - in: formData
+          name: content
+          type: string
+          required: false
+          description: The content of the blog
+        - in: formData
+          name: conclusion
+          type: string
+          required: false
+          description: The conclusion of the blog
+        - in: formData
+          name: author
+          type: string
+          required: false
+          description: The author of the blog
+        - in: formData
+          name: category
+          type: array
+          required: false
+          description: The category of the blog, array of strings
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the blog
+        - in: formData
+          name: authorImage
+          type: file
+          required: false
+          description: An author image file for the blog
+      responses:
+        201:
+          description: Blog created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating blog
+
+  /blog/delete:
+    post:
+      tags:
+        - Contact Us
+      summary: Delete blog post
+      description: Endpoint for Inbrand to delete blog post
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - blogId
+            properties:
+              blogId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /blog/getBlogs:
+    get:
+      tags:
+        - Blog
+      summary: Get all blog posts
+      description: Fetch blog post
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          description: search user with email
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          description: sort based on category
+          schema:
+            type: boolean
+        - name: startDate
+          in: query
+          required: false
+          description: sort based on date
+          schema:
+            type: boolean
+        - name: endDate
+          in: query
+          required: false
+          description: sort based on date
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /blog/getBlog/{blogId}:
+    get:
+      tags:
+        - Blog
+      summary: Get a blog
+      description: Fetch a blog post data
+      parameters:
+        - name: blogId
+          in: query
+          required: true
+          description: The blog id of the blog post
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#EVENT
+  /event/create:
+    post:
+      tags:
+        - Event
+      summary: Create a new event
+      description: Adds a new event to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: The title of the event
+        - in: formData
+          name: abstract
+          type: string
+          required: true
+          description: A brief abstract of the event
+        - in: formData
+          name: introduction
+          type: string
+          required: false
+          description: An introduction of the event (optional)
+        - in: formData
+          name: content
+          type: string
+          required: true
+          description: The content of the event
+        - in: formData
+          name: conclusion
+          type: string
+          required: false
+          description: The conclusion of the event
+        - in: formData
+          name: author
+          type: string
+          required: false
+          description: The author of the event
+        - in: formData
+          name: category
+          type: array
+          required: true
+          description: The category of the event, array of strings
+        - in: formData
+          name: eventDate
+          type: string
+          required: true
+          description: The eventDate of the event. Date format YYYY-MM-DD
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the event
+        - in: formData
+          name: authorImage
+          type: file
+          required: false
+          description: An author image file for the event
+      responses:
+        201:
+          description: Event created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating event
+
+  /event/update:
+    post:
+      tags:
+        - Event
+      summary: Update an event
+      description: Update an event to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: The title of the event
+        - in: formData
+          name: abstract
+          type: string
+          required: true
+          description: A brief abstract of the event
+        - in: formData
+          name: introduction
+          type: string
+          required: false
+          description: An introduction of the event (optional)
+        - in: formData
+          name: content
+          type: string
+          required: true
+          description: The content of the event
+        - in: formData
+          name: conclusion
+          type: string
+          required: false
+          description: The conclusion of the event
+        - in: formData
+          name: author
+          type: string
+          required: false
+          description: The author of the event
+        - in: formData
+          name: category
+          type: array
+          required: true
+          description: The category of the event, array of strings
+        - in: formData
+          name: eventDate
+          type: string
+          required: false
+          description: The eventDate of the event. Date format YYYY-MM-DD
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the event
+        - in: formData
+          name: authorImage
+          type: file
+          required: false
+          description: An author image file for the event
+      responses:
+        201:
+          description: Event created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating event
+
+  /blog/delete:
+    post:
+      tags:
+        - Blog
+      summary: Delete blog post
+      description: Endpoint for Inbrand to delete blog post
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - blogId
+            properties:
+              blogId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /blog/getBlogs:
+    get:
+      tags:
+        - Blog
+      summary: Get all blog posts
+      description: Fetch blog post
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          description: search user with email
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          description: sort based on category
+          schema:
+            type: boolean
+        - name: startDate
+          in: query
+          required: false
+          description: sort based on date
+          schema:
+            type: boolean
+        - name: endDate
+          in: query
+          required: false
+          description: sort based on date
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /blog/getBlog/{blogId}:
+    get:
+      tags:
+        - Blog
+      summary: Get a blog
+      description: Fetch a blog post data
+      parameters:
+        - name: blogId
+          in: query
+          required: true
+          description: The blog id of the blog post
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+#COMMUNITY
+  /community/create:
+    post:
+      tags:
+        - Community
+      summary: Create a new community
+      description: Adds a new community to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: title
+          type: string
+          required: true
+          description: The title of the community
+        - in: formData
+          name: abstract
+          type: string
+          required: false
+          description: A brief abstract of the community
+        - in: formData
+          name: introduction
+          type: string
+          required: false
+          description: An introduction of the community (optional)
+        - in: formData
+          name: content
+          type: string
+          required: true
+          description: The content of the community
+        - in: formData
+          name: conclusion
+          type: string
+          required: false
+          description: The conclusion of the community
+        - in: formData
+          name: author
+          type: string
+          required: false
+          description: The author of the community
+        - in: formData
+          name: category
+          type: array
+          required: true
+          description: The category of the community, array of strings
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the community
+        - in: formData
+          name: authorImage
+          type: file
+          required: false
+          description: An author image file for the community
+      responses:
+        201:
+          description: Community created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating community
+
+  /community/update:
+    post:
+      tags:
+        - Community
+      summary: Update a community
+      description: Update a community to the INBRANDpr platform. Accepts file upload via multipart/form-data.
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: commuityId
+          type: string
+          required: true
+          description: The commuityId of the community
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The title of the community
+        - in: formData
+          name: abstract
+          type: string
+          required: false
+          description: A brief abstract of the community
+        - in: formData
+          name: introduction
+          type: string
+          required: false
+          description: An introduction of the community (optional)
+        - in: formData
+          name: content
+          type: string
+          required: false
+          description: The content of the community
+        - in: formData
+          name: conclusion
+          type: string
+          required: false
+          description: The conclusion of the community
+        - in: formData
+          name: author
+          type: string
+          required: false
+          description: The author of the community
+        - in: formData
+          name: category
+          type: array
+          required: false
+          description: The category of the community, array of strings
+        - in: formData
+          name: image
+          type: file
+          required: false
+          description: An image file representing the community
+        - in: formData
+          name: authorImage
+          type: file
+          required: false
+          description: An author image file for the community
+      responses:
+        201:
+          description: Community created successfully
+        400:
+          description: Missing required fields
+        500:
+          description: Server error while creating community
+
+  /community/delete:
+    post:
+      tags:
+        - Community
+      summary: Delete community post
+      description: Endpoint for Inbrand to delete community post
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - communityId
+            properties:
+              communityId:
+                type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /community/getCommunities:
+    get:
+      tags:
+        - Community
+      summary: Get all community posts
+      description: Fetch community post
+      parameters:
+        - name: limit
+          in: query
+          required: true
+          description: The limits of data sent on each request
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: true
+          description: the page number
+          schema:
+            type: string
+        - name: search
+          in: query
+          required: false
+          description: search user with email
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          description: sort based on category
+          schema:
+            type: boolean
+        - name: startDate
+          in: query
+          required: false
+          description: sort based on date
+          schema:
+            type: boolean
+        - name: endDate
+          in: query
+          required: false
+          description: sort based on date
+          schema:
+            type: boolean
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
+
+  /community/getCommunity/{communityId}:
+    get:
+      tags:
+        - Community
+      summary: Get a community
+      description: Fetch a community post data
+      parameters:
+        - name: communityId
+          in: query
+          required: true
+          description: The community id of the blog post
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+        400:
+          description: User error
+        500:
+          description: Server error
