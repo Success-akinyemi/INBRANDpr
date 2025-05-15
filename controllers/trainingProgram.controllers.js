@@ -16,7 +16,7 @@ export async function newTraining(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'training/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'training/images', 'image')
         }
 
         const uniqueId = await generateUniqueCode(9)
@@ -48,7 +48,7 @@ export async function updateTraining(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'training/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'training/images', 'image')
         }
 
         const getTraining = await TrainingProgramModel.findOne({ 

@@ -45,7 +45,7 @@ export async function newEvent(req, res) {
 
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'event/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'event/images', 'image')
         }
 
         let authorImageUrl = null
@@ -109,7 +109,7 @@ export async function updateEvent(req, res) {
 
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'event/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'event/images', 'image')
         }
 
         let authorImageUrl = null

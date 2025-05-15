@@ -1,4 +1,4 @@
-import { sendResponse } from "../middlewares/utils.js"
+import { sendResponse, uploadToCloudinary } from "../middlewares/utils.js"
 import CommunityModel from "../model/Community.js";
 import CommunityCategoryModel from "../model/CommunityCategory.js";
 
@@ -30,12 +30,12 @@ export async function newCommuntiy(req, res) {
 
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'community/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'community/images', 'image')
         }
 
         let authorImageUrl = null
         if(authorImage?.[0]){
-            authorImageUrl = uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
+            authorImageUrl = await uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
         }
 
         const uniqueCode = await generateUniqueCode(9)
@@ -90,12 +90,12 @@ export async function updateCommunity(req, res) {
 
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'community/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'community/images', 'image')
         }
 
         let authorImageUrl = null
         if(authorImage?.[0]){
-            authorImageUrl = uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
+            authorImageUrl = await uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
         }
 
         const getCommunity = await CommunityModel.findOne({ commuityId })

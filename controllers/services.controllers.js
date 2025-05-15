@@ -10,7 +10,7 @@ export async function newService(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'services/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'services/images', 'image')
         }
 
         const uniqueId = await generateUniqueCode(9)
@@ -39,7 +39,7 @@ export async function updateService(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'services/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'services/images', 'image')
         }
 
         const getService = await ServicesModel.findOne({ 

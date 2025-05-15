@@ -10,7 +10,7 @@ export async function newStroy(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'clientStory/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'clientStory/images', 'image')
         }
 
         const uniqueId = await generateUniqueCode(9)
@@ -40,7 +40,7 @@ export async function updateStory(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'clientStory/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'clientStory/images', 'image')
         }
 
         const getStroy = await ClientStoryModel.findOne({ 

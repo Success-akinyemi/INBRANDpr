@@ -46,7 +46,7 @@ const upload = multer({ storage });
 
 export const uploadMiddleware = upload.fields([
   { name: "image", maxCount: 1 },
-  { name: "trackUrl", maxCount: 1 },
+  { name: "authorImage", maxCount: 1 },
   { name: "trackImg", maxCount: 1 },
 ]);
 

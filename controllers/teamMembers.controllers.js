@@ -10,7 +10,7 @@ export async function newMember(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'teamMembers/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'teamMembers/images', 'image')
         }
 
         const uniqueId = await generateUniqueCode(9)
@@ -39,7 +39,7 @@ export async function updateMember(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'services/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'services/images', 'image')
         }
 
         const getMember = await TeamMembersModel.findOne({ 

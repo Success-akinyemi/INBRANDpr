@@ -30,12 +30,12 @@ export async function newBlog(req, res) {
 
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'blog/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'blog/images', 'image')
         }
 
         let authorImageUrl = null
         if(authorImage?.[0]){
-            authorImageUrl = uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
+            authorImageUrl = await uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
         }
 
         const uniqueCode = await generateUniqueCode(9)
@@ -90,12 +90,12 @@ export async function updateBlog(req, res) {
 
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'blog/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'blog/images', 'image')
         }
 
         let authorImageUrl = null
         if(authorImage?.[0]){
-            authorImageUrl = uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
+            authorImageUrl = await uploadToCloudinary(authorImage[0].buffer, 'author/images', 'image')
         }
 
         const getBlog = await BlogModel.findOne({ blogId })

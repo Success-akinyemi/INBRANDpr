@@ -10,7 +10,7 @@ export async function newProject(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'project/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'project/images', 'image')
         }
 
         const uniqueId = await generateUniqueCode(9)
@@ -39,7 +39,7 @@ export async function updateProject(req, res) {
     try {
         let imageUrl = null
         if(image?.[0]){
-            imageUrl = uploadToCloudinary(image[0].buffer, 'project/images', 'image')
+            imageUrl = await uploadToCloudinary(image[0].buffer, 'project/images', 'image')
         }
 
         const getproject = await ProjectModel.findOne({ 
